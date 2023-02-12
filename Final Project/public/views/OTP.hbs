@@ -1,0 +1,46 @@
+<div class="everythingBox">
+    <p>&nbsp;</p>
+    <div class="key">
+        <div class="labelAndErase">
+            <legend><strong>Key</strong></legend>
+            <button class="eraseBtn" onclick="document.getElementById('keyText').value = ''">X</button>
+        </div>
+        <form id="keyInput" method="post" action="/key">
+            <fieldset class="fields">
+                <textarea class="message" id="keyText" cols="30" rows="10"></textarea>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="conversions">
+        <p>&nbsp;</p>
+        <div class="Message">
+            <div class="labelAndErase">
+                <legend><strong>Message</strong></legend>
+                <button class="eraseBtn" onclick="document.getElementById('inputText').value = ''">X</button>
+            </div>
+            <form id="messageInput" method="POST" action="/submit-message-form"> 
+                <fieldset class="fields">
+                    <textarea class="message" id="inputText" cols="30" rows="10"></textarea>
+                </fieldset>
+            </form>    
+        </div>
+
+        <div class="OTPbuttons">
+            <input class="btn" type="submit" id="encryptMessage" value="Encrypt">
+            <input class="btn" type="submit" id="decryptMessage" value="Decrypt">
+        </div>
+
+        <div class="output">
+            <div class="labelAndErase">
+                <legend><strong>Output</strong></legend>
+                <button class="eraseBtn" onclick="document.getElementById('outputText').value = ''">X</button>
+            </div>
+            <form id="outputMessage" method="" action="/output-message-form">
+                <fieldset class="fields">
+                    <textarea class="message" id="outputText" cols="30" rows="10"></textarea>
+                </fieldset> 
+            </form>    
+        </div>
+    </div>
+</div>

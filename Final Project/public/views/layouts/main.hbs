@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>MultiTool</title>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>MultiTool</h1>
+            <div class="navbar">
+                <a href="keyGen">Key Generator</a>
+                <a href="otp">OTP</a>
+                <a href="ceaser">Ceaser Cipher</a>
+                <a href="asciiToHex">ASCII to Hexadecimal</a> 
+
+            </div>
+        </div>
+
+        <!-- Uses express-handlebars so that I can make the main view work for 
+        all pages. Because of this adding new modules in the future will be
+        as easy as adding a link and creating an .hbs file-->
+
+        {{{body}}}
+
+
+    </body>
+</html>
