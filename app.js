@@ -9,6 +9,7 @@ const  readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
 });
+var fs = require('fs');
 var s =  require('net').Socket();
 var app = express();
 
@@ -52,6 +53,25 @@ app.get('/:name', function(req, res){
     var filename = req.params.name;
     res.render(filename);
 });
+
+app.post('/generate-key', function(req, res){
+
+    /*
+    * Message Format: 
+    * length
+    */
+
+    let data = req.body;
+    let length = data.keyLength;
+
+    fs.writeFileSync('generator-service.txt', length);
+
+    let fileData = fs.readFileSync('generator-service.txt', {encoding:'utf8', flag:'r'});
+    res.send({
+        key: fileData
+    });
+});
+
 
 app.post('/translate-ascii-hex', function(req, res){
 
