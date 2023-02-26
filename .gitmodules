@@ -1,0 +1,3 @@
+[submodule "CS361Microservice"]
+	path = CS361Microservice
+	url = https://github.com/GabbyNorth/CS361Microservice.git

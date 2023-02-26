@@ -131,7 +131,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node app.js"
+    "start": "(python3 asciiToHex/asciiToHex.py > asciiToHexLog.txt &) && (python3 CS361Microservice/generator-service.py > generator-serviceLog.txt &) && node app.js"
   },
   "repository": {
     "type": "git",
