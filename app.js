@@ -92,3 +92,10 @@ app.post('/translate-ascii-hex', function(req, res){ //ascii to hex translation 
 app.listen(PORT, function (){
     console.log("Server is running on localhost " + PORT);
 });
+
+process.on('SIGINT', () => { 
+    console.log("Bye bye!");
+    console.log("test");
+    fs.writeFileSync(GENPATH, 'exit');
+    process.exit();
+ });
