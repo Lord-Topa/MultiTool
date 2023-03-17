@@ -1,9 +1,9 @@
-//Set up
+//Set up and requirements
 const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
 var fs = require('fs');
-var s =  require('net').Socket();
+var socket =  require('net').Socket();
 var app = express();
 
 app.use(express.json());
@@ -13,6 +13,7 @@ const { engine } = require('express-handlebars');
 const { read } = require('fs');
 const { response } = require('express');
 const { setMaxIdleHTTPParsers } = require('http');
+const { getSystemErrorMap } = require('util');
 app.engine('.hbs', exphbs.engine({
     extname: ".hbs",
     defaultLayout: "main"
@@ -21,15 +22,32 @@ app.set('views', path.join(__dirname, 'public/views'));
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 PORT = 3000;
-GENPATH = 'generator-service.txt';
 
-//General Stuff
-s.connect(6374, "127.0.0.1"); //ascii-to-hex translator
+// Module IO paths
+GENERATOR_PATH = 'generator-service.txt';
+OTP_PATH = 'otpMicroservice.txt';
+CEASER_PATH = 'ceaserCipher.txt';
+
+//Ascii-to-hex translator server socket handling and the post handler
+socket.connect(6374, "127.0.0.1");
 var asciiToHex = "";
-s.on('data', function(d){
+socket.on('data', function(d){
     asciiToHex = d.toString().slice(0);
     var firstInstance = asciiToHex.indexOf("!0!");
     asciiToHex = asciiToHex.slice(firstInstance + 3);
+});
+app.post('/translate-ascii-hex', function(req, res){
+    let data = req.body;
+    let message = data.asciiText;
+    socket.write(message);
+    let response = "";
+    setTimeout(function(){
+        response = asciiToHex;
+        console.log("newResponse : " + response);
+        res.send({
+            asciiText: response
+        });
+    }, 100);
 });
 
 //Routing
@@ -46,56 +64,64 @@ app.get('/:name', function(req, res){
     res.render(filename);
 });
 
-app.post('/generate-key', function(req, res){ //Key generation happens here
-
-    /*
-    * Message Format: 
-    * length
-    */
-
+//This handler and all others after work similarly by watching a text file for changes
+app.post('/generate-key', function(req, res){
     let data = req.body;
     let length = data.keyLength;
 
-    fs.writeFileSync(GENPATH, length);
+    fs.writeFileSync(GENERATOR_PATH, length);
 
-    fs.watchFile(GENPATH, {bigint: false, persistent: true, interval: 250}, (curr, prev) => {
-        let fileData = fs.readFileSync(GENPATH, {encoding:'utf8', flag:'r'});
-        //fileData.replace('*', '');
+    fs.watchFile(GENERATOR_PATH, {bigint: false, persistent: true, interval: 250}, (curr, prev) => {
+        let fileData = fs.readFileSync(GENERATOR_PATH, {encoding:'utf8', flag:'r'});
         res.send({
             key: fileData.replaceAll('*', '')
         });
-        fs.unwatchFile(GENPATH);
+        fs.unwatchFile(GENERATOR_PATH);
     });
 });
 
-
-app.post('/translate-ascii-hex', function(req, res){ //ascii to hex translation handled here
-
-    /*
-    * message format: 
-    * length!0!message
-    */
+app.post('/otp-function', function(req, res){
     let data = req.body;
-    let msg = data.asciiText;
-    console.log(msg);
-    s.write(msg);
-    let response = "";
-    setTimeout(function(){
-        response = asciiToHex;
-        console.log("newResponse : " + response);
+    let otpKey = data.keyText;
+    let otpMessage = data.message;
+    let otpType = data.type;
+    let fileInput = otpType + '!0!' + otpKey + '!0!' + otpMessage;
+    fs.writeFileSync(OTP_PATH, fileInput);
+    fs.watchFile(OTP_PATH, {bigint: false, persistent: true, interval: 250}, (curr, prev) => {
+        let fileData = fs.readFileSync(OTP_PATH, {encoding: 'utf8', flag:'r'});
         res.send({
-            asciiText: response
+            message: fileData
         });
-    }, 100);
+        fs.unwatchFile(OTP_PATH);
+    });
+
+});
+
+app.post('/ceaser-cipher', function(req, res){
+    let data = req.body;
+    let shift = data.shift;
+    let message = data.message;
+
+    console.log(message);
+    let fileInput = shift + '!0!' + message;
+    fs.writeFileSync(CEASER_PATH, fileInput);
+    fs.watchFile(CEASER_PATH, {bigint: false, persistent: true, interval: 250}, (curr, prev) => {
+        let fileData = fs.readFileSync(CEASER_PATH, {encoding: 'utf-8', flag: 'r'});
+        res.send({message: fileData});
+        fs.unwatchFile(CEASER_PATH);
+    });
+
 });
 
 app.listen(PORT, function (){
     console.log("Server is running on localhost " + PORT);
 });
 
+//Handles exiting
 process.on('SIGINT', () => { 
     console.log("Bye bye!");
-    console.log("test");
-    fs.writeFileSync(GENPATH, 'exit');
+    fs.writeFileSync(GENERATOR_PATH, 'exit');
+    fs.writeFileSync(OTP_PATH, 'exit');
+    fs.writeFileSync(CEASER_PATH, 'exit');
     process.exit();
  });

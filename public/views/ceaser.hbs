@@ -1,3 +1,23 @@
+<script>
+    $(function() {
+    $('#submitShift').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "/ceaser-cipher",
+            data: JSON.stringify({ shift: $('#shiftInputText').val(), message: $('#ceaserInputText').val()}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $('#ceaserOutputText').text(data.message)
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    })
+})
+</script>
+
 <div class="everythingBox">
     <p>&nbsp;</p>
     <div class="shiftInput">

@@ -130,7 +130,7 @@
     "xmlchars": "^2.2.0"
   },
   "scripts": {
-    "start": "(python3 asciiToHex/asciiToHex.py > asciiToHexLOG.txt &) && (python3 CS361Microservice/generator-service.py > generator-serviceLOG.txt &) && node app.js"
+    "start": "(python3 asciiToHex/asciiToHex.py > asciiToHexLOG.txt &) && (python3 CS361Microservice/generator-service.py > generator-serviceLOG.txt &) && (python3 OTP/otpMicroservice.py > otpMicroserviceLOG.txt &) && (python3 ceaserCipher/ceaserCipher.py > ceaserCipherLOG.txt &) && node app.js"
   },
   "repository": {
     "type": "git",
