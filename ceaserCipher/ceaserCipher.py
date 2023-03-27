@@ -16,7 +16,7 @@ def writeToFile(msg):
     fileWrite.close()
 
 # This function takes in a string and checks to make sure that it
-# contains only characters that are valid for OTP.
+# contains only characters that are valid for Encoding.
 def checkValidCharacters(string):
     allowedCharacters = set(('ABCDEFGHIJKLMNOPQRSTUVWXYZ '))
     isValid = set((string.upper()))
