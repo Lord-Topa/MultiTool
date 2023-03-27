@@ -6,7 +6,7 @@
 * [Video Demonstration](https://github.com/Lord-Topa/MultiTool#video-demonstration)
 * [Instructions](https://github.com/Lord-Topa/MultiTool#instructions)
 	1. [Key Generator](https://github.com/Lord-Topa/MultiTool#key-gen)
-	2. [OTP Encryption/Decryption](https://github.com/Lord-Topa/MultiTool##otp-encryptiondecryption)
+	2. [OTP Encryption/Decryption](https://github.com/Lord-Topa/MultiTool#otp-encryptiondecryption)
 	3. [Caesar Cipher](https://github.com/Lord-Topa/MultiTool#caesar-cipher)
 	4. [Ascii to Hex](https://github.com/Lord-Topa/MultiTool#ascii-to-hex)
 	5. [A Note on Modularity](https://github.com/Lord-Topa/MultiTool#a-note-on-modularity)
