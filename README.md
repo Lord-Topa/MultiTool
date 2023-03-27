@@ -81,6 +81,7 @@ When exiting after running this way the server will handle shutting down all mic
 3. Input a message, consisting of only A-Z characters and space, into the "Message" text area
 4. Press the "Convert" button
 5. Collect output from the text area labeled "Encoded"
+<img width="1317" alt="Screen Shot 2023-03-27 at 12 23 27 PM" src="https://user-images.githubusercontent.com/48222621/228045615-404f6ccf-54ee-44fc-bc75-6261993a7c6b.png">
 
 ------------------
 ### Ascii to Hex:
@@ -89,6 +90,7 @@ When exiting after running this way the server will handle shutting down all mic
 2. Put a message, consisting of only valid ascii characters, into the "Ascii" text area
 3. Press the "Translate" button
 4. Collect hexadecimal version of message from the "Hexadecimal" text area
+<img width="1317" alt="Screen Shot 2023-03-27 at 12 25 06 PM" src="https://user-images.githubusercontent.com/48222621/228045906-8fa6ee30-849d-4cbc-bb70-69f998c9cafb.png">
 
 ------------------
 ### A Note on Modularity:
